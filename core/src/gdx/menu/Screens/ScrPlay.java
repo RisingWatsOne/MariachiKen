@@ -31,20 +31,12 @@ public class ScrPlay implements Screen, InputProcessor {
     Sprite treeobject;
     Texture rock;
     Sprite rockobject;
-    Texture squid;
-    Sprite squidenimy;
-    Texture hand;
-    Sprite handenimy;
-    Texture spider;
-    Sprite spiderenimy;
-    Texture pig;
-    Sprite pigenimy;
-    Texture pig2;
-    Sprite pigenimy2;
+    Texture txtPig;
+    Sprite sprPig;
+    Texture txtPig2;
+    Sprite sprPig2;
     Texture slime;
     Sprite slimeenimy;
-    Texture snake;
-    Sprite snakeenimy;
     Texture slimeball;
     Sprite slimeballobject;
         public int nXpos1 = (int)(Math.random() * 240 + 1);
@@ -54,7 +46,9 @@ public class ScrPlay implements Screen, InputProcessor {
         public int nYpos3 = 0;
         public int nXpos3 = 240;
         public int nXpos4 = 240;
-        public int nYpos4 = 0;
+        public int nYpos4 = 300;
+        public int nXpos5 = 240;
+        public int nYpos5 = 300;
         public int nDirect = -1;
 
     public ScrPlay(GdxMenu _gdxMenu) {  //Referencing the main class.
@@ -64,20 +58,12 @@ public class ScrPlay implements Screen, InputProcessor {
     public void show() {
         slimeball = new Texture("slimeball1.png");
         slimeballobject = new Sprite(slimeball);
-        pig = new Texture("Pig.png");
-        pigenimy = new Sprite(pig);
-        pig2 = new Texture("Pig2.png");
-        pigenimy2 = new Sprite(pig2);
-        hand = new Texture("hand.png");
-        handenimy = new Sprite(hand);
-        snake = new Texture("snake.png");
-        snakeenimy = new Sprite(snake);
+        txtPig = new Texture("Pig.png");
+        sprPig = new Sprite(txtPig);
+        txtPig2 = new Texture("Pig2.png");
+        sprPig2 = new Sprite(txtPig2);
         slime = new Texture("slime.png");
         slimeenimy = new Sprite(slime);
-        spider = new Texture("spider.png");
-        spiderenimy = new Sprite(spider);
-        squid = new Texture("squid.png");
-        squidenimy = new Sprite(squid);
         grass = new Texture("Grass Tile Demo.png");
         grassmap = new Sprite(grass);
         tree = new Texture("tree.png");
@@ -88,81 +74,76 @@ public class ScrPlay implements Screen, InputProcessor {
         tbsMenu = new TbsMenu();
         batch = new SpriteBatch();
         screenName = new BitmapFont();
-        tbGameover = new TbMenu("LOSE", tbsMenu);
-        tbGameover.setY(400);
-        tbGameover.setX(-10);
         tbOptions = new TbMenu("OPTIONS", tbsMenu);
         tbOptions.setY(0);
         tbOptions.setX(440);
         stage.addActor(tbOptions);
-        stage.addActor(tbGameover);
         Gdx.input.setInputProcessor(stage);
-        btnGameoverListener();
         btnOptionsListener();
         
     }
 
     public void render(float delta) {
-        Gdx.gl.glClearColor(.135f, .206f, .235f, 1); //blue background.
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(grassmap, 0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(treeobject, nXpos1,nYpos1,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(rockobject, nXpos2+100,nYpos2-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(slimeballobject, nXpos4,nYpos4,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
-       // batch.draw(handenimy, nXpos3+100,nYpos3+150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(pigenimy, nXpos3,nYpos3+100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(slimeenimy, nXpos3+100,nYpos3+40,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(snakeenimy, nXpos3,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(spiderenimy, nXpos3+100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(squidenimy, nXpos3,nYpos3-100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       // batch.draw(rockobject, nXpos2+100,nYpos2-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(slimeballobject, nXpos5,nYpos5,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
         if(nDirect==-1){
-        batch.draw(pigenimy, nXpos3+100,nYpos3+150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3,nYpos3+100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3+100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3+100,nYpos3+150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3,nYpos3+100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3+100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(slimeenimy, nXpos3,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3+100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3,nYpos3-100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3+100,nYpos3-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3-200,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3-100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy, nXpos3-100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3+100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3,nYpos3-100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3+100,nYpos3-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3-200,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3-100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig, nXpos3-100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
        
         batch.end();
         stage.act();
         stage.draw();
     }
         else if(nDirect==1){
-        batch.draw(pigenimy2, nXpos3+100,nYpos3+150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3,nYpos3+100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3+100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3+100,nYpos3+150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3,nYpos3+100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3+100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(slimeenimy, nXpos3,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3+100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3,nYpos3-100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3+100,nYpos3-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3-200,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3-100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.draw(pigenimy2, nXpos3-100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3+100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3,nYpos3-100,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3+100,nYpos3-150,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3-200,nYpos3,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3-100,nYpos3-50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(sprPig2, nXpos3-100,nYpos3+50,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
         batch.end();
         stage.act();
         stage.draw();
     }
-        if(nXpos3 >= 0){
+        //if(nXpos3 >= 0){
             nXpos4-=5;
-        }
-        else if(nXpos3 <= 0){
-            nXpos4+=5;
-        }
+            //nYpos5 = 1000;
+            nYpos4 = 0;
+        //}
+        //if(nXpos3 <= 0){
+            nXpos5+=5;
+           // nYpos4 = 1000;
+            nYpos5 = 0;
+        //}
         
          nXpos3+=nDirect;
-         if(nXpos4 <= -305&&nXpos4 >= -310||nXpos4 >= 305&&nXpos4 <= 310){
+         
+         if(nXpos4 <= -305 && nXpos4 >= -310){
              nXpos4 = nXpos3;
          }
-        if(nXpos3 == -240||nXpos3==240){
+         if(nXpos5 >= 305 && nXpos5 <= 310){
+             nXpos5 = nXpos3+30;
+         }
+        if(nXpos3 == -240 || nXpos3 == 240){
             nDirect = nDirect*(-1);
         }
         
@@ -176,14 +157,7 @@ public class ScrPlay implements Screen, InputProcessor {
             }
         });
     }
-    public void btnGameoverListener(){
-        tbGameover.addListener(new ChangeListener(){
-            public void changed(ChangeListener.ChangeEvent event, Actor actor){
-                gdxMenu.currentState = gdxMenu.gameState.OVER;
-                gdxMenu.updateState();
-            }
-        });
-    }
+    
    
 
     @Override
